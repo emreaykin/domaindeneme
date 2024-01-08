@@ -6,7 +6,7 @@ export const startWebsocket = async (server) => {
     wss.on("connection", async (ws) => {
       console.log("Kullanıcı bağlandı..");
       setInterval(() => {
-        ws.send(JSON.stringify({ label: "Merhaba deneme oto..." }));
+        ws.send(JSON.stringify({ label: "Merhaba deneme oto... oto restart deneme" }));
       }, 2000);
       ws.on("message", async (message) => {
         let messageStr = message.toString();
