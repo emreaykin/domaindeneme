@@ -1,12 +1,14 @@
 import { WebSocketServer } from "ws";
 import { randomBytes } from "crypto";
+import { v4 as uuidv4 } from 'uuid';
 export const startWebsocket = async (server) => {
   try {
     const wss = new WebSocketServer({ server });
     wss.on("connection", async (ws) => {
       console.log("Kullanıcı bağlandı..");
+
       setInterval(() => {
-        ws.send(JSON.stringify({ label: generateRandomString(10) }));
+        ws.send(JSON.stringify({ label: generateRandomString() }));
       }, 2000);
       ws.on("message", async (message) => {
         let messageStr = message.toString();
@@ -21,6 +23,7 @@ export const startWebsocket = async (server) => {
     });
   } catch (error) {}
 };
-function generateRandomString(length) {
-  return randomBytes(length).toString("base64");
+
+function generateRandomString() {
+  return uuidv4();
 }
