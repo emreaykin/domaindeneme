@@ -18,7 +18,7 @@ export const startWebsocket = async (server) => {
       ws.on("close", async () => {});
 
       ws.on("error", async (err) => {
-        console.error("WebSocket hatası:", err);
+        console.error("WebSocket hatası:a", err);
       });
     });
   } catch (error) {}
