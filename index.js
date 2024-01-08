@@ -23,6 +23,8 @@ app.post('/api/goodbye', (req, res) => {
 });
 const server = app.listen(PORT, async () => {
   console.log(`Uygulama http://localhost:${PORT} çalışıyor `);
-
+  
   startWebsocket(server);
 });
+
+
