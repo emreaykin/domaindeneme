@@ -1,37 +1,30 @@
-import pg from 'pg';
-const { Client } = pg;
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import { startWebsocket } from "./websocket.js";
 
-// PostgreSQL bağlantı bilgileri
-const client = new Client({
-  user: 'user',
-  host: 'cls4omqua000xmwa4fcl3owim',
-  database: 'users',
-  password: '11ce33dE',
-  port: 5432,
+const app = express();
+const PORT = process.env.PORT ;
+app.use(bodyParser.json({ limit: "2mb" }));
+app.use(express.json());
+app.use(cors());
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Hoşgeldin!' });
+});
+// GET endpoint
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Merhaba Dünya!' });
 });
 
-// PostgreSQL sunucusuna bağlanma
-client.connect()
-    .then(() => {
-        console.log('PostgreSQL veritabanına bağlandı!');
-        // Mevcut tabloları sorgula
-        return client.query(`
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = 'public'
-            AND table_type = 'BASE TABLE';
-        `);
-    })
-    .then((result) => {
-        console.log('Mevcut tablolar:');
-        result.rows.forEach((row) => {
-            console.log(row.table_name);
-        });
-    })
-    .catch((err) => {
-        console.error('Bağlantı hatası:', err);
-    })
-    .finally(() => {
-        // Bağlantıyı kapat
-        client.end();
-    });
+// POST endpoint
+app.post('/api/goodbye', (req, res) => {
+  res.json({ message: 'Güle güle!' });
+});
+const server = app.listen(PORT, async () => {
+  console.log(`Uygulama http://localhost:${PORT} çalışıyor `);
+  
+  startWebsocket(server);
+});
+
+
