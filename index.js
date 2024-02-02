@@ -4,7 +4,7 @@ import cors from "cors";
 import { startWebsocket } from "./websocket.js";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(express.json());
 app.use(cors());
